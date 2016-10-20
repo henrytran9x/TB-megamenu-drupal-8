@@ -12,6 +12,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\tb_megamenu\TBMegaMenuBuilder;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class TBMegaMenuAdminController extends ControllerBase {
@@ -111,9 +112,8 @@ class TBMegaMenuAdminController extends ControllerBase {
             '#showblocktitle' => $showblocktitle
           );
           $content = \Drupal::service('renderer')
-            ->render($render)
-            ->__toString();
-          $result = json_encode(array('content' => $content, 'id' => $id));
+            ->render($render);
+          $result = array('content' => $content, 'id' => $id);
         }
         break;
 
@@ -121,7 +121,7 @@ class TBMegaMenuAdminController extends ControllerBase {
         break;
     }
 
-    return new Response($result);
+    return new JsonResponse($result);
   }
 
   /**
